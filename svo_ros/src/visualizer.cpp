@@ -567,7 +567,10 @@ void Visualizer::publishSeedsAsPointcloud(const Frame& frame,
     }
   }
   VLOG(30) << "Publish pointcloud of size " << pc_->size();
-  pub_pc_.publish(pc_);
+  sensor_msgs::PointCloud2 rosCloud;
+  pcl::toROSMsg(*pc_, rosCloud);
+  pub_pc_.publish(rosCloud);
+  //pub_pc_.publish(pc_);
 }
 
 void Visualizer::publishSeedsUncertainty(const Map::Ptr& map)
@@ -652,7 +655,10 @@ void Visualizer::publishMapRegion(const std::vector<FramePtr>& frames)
       }
     }
     VLOG(100) << "Publish pointcloud of size " << pc_->size();
-    pub_pc_.publish(pc_);
+    sensor_msgs::PointCloud2 rosCloud;
+    pcl::toROSMsg(*pc_, rosCloud);
+    pub_pc_.publish(rosCloud);
+    //pub_pc_.publish(pc_);
   }
 
   if (pub_points_.getNumSubscribers() > 0)
